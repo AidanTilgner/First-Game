@@ -90,6 +90,8 @@ class Player(object):
         # pygame.draw.rect(screen, (255, 0, 0), self.hitbox, 2)
     
     def hit(self):
+        self.isJump = False
+        self.jumpCount = 10
         self.x = 60
         self.y = 410
         self.walkCount = 0
@@ -99,7 +101,7 @@ class Player(object):
         pygame.display.update()
         i = 0 
         while i < 100:
-            pygame.time.delay(30)
+            pygame.time.delay(10)
             i += 1
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -250,10 +252,11 @@ while run:
     clock.tick(27)
     
     # Setting player hit event
-    if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
-            if man.hitbox[0] + man.hitbox[2] > goblin.hitbox[0] and man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
-                man.hit()
-                score -= 5
+    if goblin.visible == True:
+        if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
+                if man.hitbox[0] + man.hitbox[2] > goblin.hitbox[0] and man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
+                    man.hit()
+                    score -= 5
     
     if shootLoop > 0:
         shootLoop += 1
